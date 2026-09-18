@@ -1,5 +1,10 @@
 jQuery(document).ready(function($) {
-    
+
+    // Escape a string for safe insertion via .html()
+    function escapeHtml(str) {
+        return $('<span>').text(str == null ? '' : str).html();
+    }
+
     // Show/hide provider fields based on selection
     $('#provider').on('change', function() {
         var provider = $(this).val();
@@ -40,9 +45,9 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 $status.removeClass('success error');
                 if (response.success) {
-                    $status.addClass('success').html('<strong>' + response.data.message + '</strong>');
+                    $status.addClass('success').html('<strong>' + escapeHtml(response.data.message) + '</strong>');
                 } else {
-                    $status.addClass('error').html('<strong>Error:</strong> ' + response.data.message);
+                    $status.addClass('error').html('<strong>Error:</strong> ' + escapeHtml(response.data.message));
                 }
                 $status.show();
             },
@@ -90,9 +95,9 @@ jQuery(document).ready(function($) {
             success: function(response) {
                 $status.removeClass('success error');
                 if (response.success) {
-                    $status.addClass('success').html('<strong>Success!</strong> ' + response.data.message);
+                    $status.addClass('success').html('<strong>Success!</strong> ' + escapeHtml(response.data.message));
                 } else {
-                    $status.addClass('error').html('<strong>Error:</strong> ' + response.data.message);
+                    $status.addClass('error').html('<strong>Error:</strong> ' + escapeHtml(response.data.message));
                 }
                 $status.show();
             },
